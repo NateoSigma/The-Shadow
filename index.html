@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>The Shadow - Głęboki Mrok</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0d0d0d;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    #game-container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+    .menu, .chapter, .decision, .death-screen {
+      display: none;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      background-color: #222;
+      color: #fff;
+      border: 2px solid #555;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #444;
+    }
+    h1, h2 {
+      color: #a020f0;
+    }
+    .death {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <!-- MENU -->
+    <div id="menu" class="menu">
+      <h1>The Shadow</h1>
+      <h2>Chapter 1: Głęboki Mrok</h2>
+      <button onclick="startChapter()">Rozpocznij</button>
+    </div>
+
+    <!-- CHAPTER 1 -->
+    <div id="chapter" class="chapter">
+      <h2>Rozdział 1: Głęboki Mrok</h2>
+      <p>Jesteś Nateo – posiadasz moc cienia. Twoja ekipa: Sroka (teleportacja), Michalix (mądrość), Mrówa (snajper), Maglimboo (ogień), Gulczyk (woda). Wkraczacie do mrocznych ruin, gdzie czai się Białe Oko – władca szkieletów.</p>
+      <button onclick="decision1()">Kontynuuj</button>
+    </div>
+
+    <!-- DECISIONS -->
+    <div id="decision" class="decision">
+      <h2 id="decision-title"></h2>
+      <p id="decision-text"></p>
+      <div id="decision-buttons"></div>
+    </div>
+
+    <!-- DEATH SCREEN -->
+    <div id="death-screen" class="death-screen">
+      <h2 class="death">Zginąłeś!</h2>
+      <p id="death-reason"></p>
+      <p>Za chwilę spróbujesz ponownie...</p>
+    </div>
+  </div>
+
+  <script>
+    const menu = document.getElementById("menu");
+    const chapter = document.getElementById("chapter");
+    const decision = document.getElementById("decision");
+    const deathScreen = document.getElementById("death-screen");
+    const decisionTitle = document.getElementById("decision-title");
+    const decisionText = document.getElementById("decision-text");
+    const decisionButtons = document.getElementById("decision-buttons");
+    const deathReason = document.getElementById("death-reason");
+
+    let lastDecision = null;
+
+    function startChapter() {
+      menu.style.display = "none";
+      chapter.style.display = "block";
+    }
+
+    // Decyzje początkowe
+    function decision1() {
+      chapter.style.display = "none";
+      showDecision(
+        "Pierwsza decyzja",
+        "Na drodze staje grupa Białych szkieletów. Co robisz?",
+        [
+          { text: "Użyj mocy cienia i spróbuj ich obejść.", correct: true, next: decision2 },
+          { text: "Ruszaj sam na wprost i atakuj.", correct: false, reason: "Zaatakowałeś sam i zostałeś otoczony." },
+          { text: "Poproś Mrówę, by ich zdjął ze snajperki.", correct: true, next: decision3 },
+          { text: "Spróbuj ukryć się w cieniu.", correct: true, next: decisionExtra11 },
+          { text: "Poproś Srokę, by teleportował was do sali tronowej.", correct: false, reason: "Teleportacja zawiodła, trafiliście w pułapkę." }
+        ]
+      );
+    }
+
+    function decision2() {
+      showDecision(
+        "Druga decyzja",
+        "Docierasz głębiej do ruin. Zauważasz dwie ścieżki.",
+        [
+          { text: "Idź korytarzem oświetlonym dziwnym światłem.", correct: false, reason: "Światło było pułapką – demony cię pochłonęły." },
+          { text: "Każ Sroce sprawdzić korytarz teleportacją.", correct: true, next: decisionExtra12 },
+          { text: "Idź ciemnym tunelem, używając swojej mocy cienia.", correct: true, next: decision4 },
+          { text: "Wyślij Maglimboo, aby sprawdził korytarz ogniem.", correct: true, next: decisionExtra1 },
+          { text: "Zatrzymaj się i zapytaj Michalixa o radę.", correct: true, next: decisionExtra3 }
+        ]
+      );
+    }
+
+    function decision3() {
+      showDecision(
+        "Pomoc Mrówy",
+        "Mrówa zdejmuje kilku szkieletów, ale reszta was zauważa. Musicie uciekać!",
+        [
+          { text: "Sroka teleportuje was w bezpieczne miejsce.", correct: true, next: decision4 },
+          { text: "Spróbujecie walczyć bez przygotowania.", correct: false, reason: "Szkielety was otoczyły i rozgromiły." },
+          { text: "Gulczyk zalewa salę wodą, by spowolnić wroga.", correct: true, next: decisionExtra2 },
+          { text: "Maglimboo tworzy ścianę ognia, by odgrodzić szkielety.", correct: true, next: decisionExtra4 }
+        ]
+      );
+    }
+
+    function decision4() {
+      showDecision(
+        "Pułapka!",
+        "Nagle zapada się podłoga. Co robisz?",
+        [
+          { text: "Używasz mocy cienia, by zatrzymać upadek.", correct: true, next: decision5 },
+          { text: "Wołasz Gulczyka, by zalał dół wodą.", correct: true, next: decision5 },
+          { text: "Michalix próbuje użyć zaklęcia ochronnego.", correct: true, next: decisionExtra13 },
+          { text: "Nic nie robisz i spadasz w otchłań.", correct: false, reason: "Spadłeś w bezdenną przepaść." },
+          { text: "Sroka próbuje teleportować całą drużynę.", correct: false, reason: "Teleportacja zawiodła w ruchu i rozpadłeś się w cieniu." }
+        ]
+      );
+    }
+
+    // Nowe dodatkowe decyzje
+    function decisionExtra1() {
+      showDecision(
+        "Maglimboo sprawdza korytarz",
+        "Maglimboo podpala korytarz i odkrywa ukrytą salę pełną demonów. Co robisz?",
+        [
+          { text: "Wycofajcie się szybko.", correct: true, next: decision4 },
+          { text: "Spróbujecie walczyć od razu.", correct: false, reason: "Demony były zbyt potężne." },
+          { text: "Michalix próbuje znaleźć alternatywne przejście.", correct: true, next: decisionExtra5 }
+        ]
+      );
+    }
+
+    function decisionExtra2() {
+      showDecision(
+        "Woda Gulczyka",
+        "Woda spowalnia szkielety, ale zalewa też część sali. Co robisz?",
+        [
+          { text: "Michalix podpowiada, by wykorzystać parę.", correct: true, next: decision7 },
+          { text: "Próbujesz przedostać się przez wodę sam.", correct: false, reason: "Utonąłeś w wirze własnej drużyny." },
+          { text: "Mrówa próbuje znaleźć wyżej położone stanowisko.", correct: true, next: decisionExtra6 }
+        ]
+      );
+    }
+
+    function decisionExtra3() {
+      showDecision(
+        "Rada Michalixa",
+        "Michalix mówi, że światło to iluzja i ostrzega przed nim. Co robisz?",
+        [
+          { text: "Idziesz w ciemność, słuchając jego rady.", correct: true, next: decision4 },
+          { text: "Ignorujesz i wybierasz światło.", correct: false, reason: "Iluzja cię pochłonęła." }
+        ]
+      );
+    }
+
+    function decisionExtra4() {
+      showDecision(
+        "Ściana ognia",
+        "Szkielety zostają zatrzymane, ale ogień odcina też drogę powrotu. Co robisz?",
+        [
+          { text: "Używasz cienia, by przejść przez ogień.", correct: true, next: decision5 },
+          { text: "Próbujesz przejść przez płomienie.", correct: false, reason: "Spłonąłeś w ogniu." }
+        ]
+      );
+    }
+
+    function decisionExtra5() {
+      showDecision(
+        "Ukryty korytarz",
+        "Michalix znajduje ukryty tunel prowadzący w głąb ruin. Co robisz?",
+        [
+          { text: "Idziesz tunelem.", correct: true, next: decision4 },
+          { text: "Ignorujesz tunel i wracasz do demonów.", correct: false, reason: "Demony was zabiły." }
+        ]
+      );
+    }
+
+    function decisionExtra6() {
+      showDecision(
+        "Stanowisko snajperskie",
+        "Mrówa znajduje wysoką półkę i ma lepszą pozycję. Co robisz?",
+        [
+          { text: "Każesz mu zdjąć dowódcę szkieletów.", correct: true, next: decision5 },
+          { text: "Każesz mu strzelać na oślep.", correct: false, reason: "Strzały zdradziły waszą pozycję." }
+        ]
+      );
+    }
+
+    function decision5() {
+      showDecision(
+        "Sala tronowa",
+        "Stajecie naprzeciw Białego Oka. Potężny wróg szykuje armię szkieletów.",
+        [
+          { text: "Atakuj cieniem i daj sygnał Maglimboo, aby użył ognia.", correct: true, next: decision6 },
+          { text: "Podbiegasz sam do Białego Oka.", correct: false, reason: "Białe Oko unicestwiło cię jednym spojrzeniem." },
+          { text: "Poproś Michalixa o radę.", correct: true, next: decision7 },
+          { text: "Spróbuj rozmawiać z Białym Okiem, by zyskać czas.", correct: true, next: decisionExtra14 },
+          { text: "Każ Mrówie strzelać prosto w oko.", correct: false, reason: "Białe Oko odbiło pocisk i trafił w ciebie." },
+          { text: "Poproś Gulczyka o użycie fali wody.", correct: true, next: decisionExtra7 }
+        ]
+      );
+    }
+
+    function decisionExtra7() {
+      showDecision(
+        "Fala Gulczyka",
+        "Gulczyk wywołuje falę wody, która przewraca część szkieletów. Co robisz?",
+        [
+          { text: "Każesz Maglimboo podgrzać wodę do pary.", correct: true, next: decision7 },
+          { text: "Sam rzucasz się na osłabionych wrogów.", correct: false, reason: "Wpadłeś w zasadzkę Białego Oka." }
+        ]
+      );
+    }
+
+    function decision6() {
+      showDecision(
+        "Zmasowany atak",
+        "Twoje cienie wiążą szkielety, a Maglimboo spala ich ognistą falą. Białe Oko zostaje osłabione!",
+        [
+          { text: "Dobijasz go razem z ekipą.", correct: true, next: victory },
+          { text: "Atakujesz sam, bez wsparcia.", correct: false, reason: "Samotny atak zakończył się klęską." },
+          { text: "Gulczyk używa wody, by zgasić resztki ognia i stworzyć parę.", correct: true, next: decision7 },
+          { text: "Połącz moc cienia z teleportacją Sroki.", correct: true, next: decisionExtra15 },
+          { text: "Sroka teleportuje się za plecy Białego Oka.", correct: true, next: decisionExtra8 }
+        ]
+      );
+    }
+
+    function decisionExtra8() {
+      showDecision(
+        "Teleportacja Sroki",
+        "Sroka pojawia się za plecami Białego Oka i ma okazję do ataku. Co robisz?",
+        [
+          { text: "Każesz mu zaatakować.", correct: false, reason: "Białe Oko przewidział ruch i go unicestwił." },
+          { text: "Wspierasz go cieniem, odciągając uwagę.", correct: true, next: victory }
+        ]
+      );
+    }
+
+    function decision7() {
+      showDecision(
+        "Rada Michalixa",
+        "Michalix radzi użyć połączenia mocy wody i ognia, aby stworzyć parę i osłonić was przed atakami.",
+        [
+          { text: "Stosujesz jego plan.", correct: true, next: victory },
+          { text: "Ignorujesz i ruszasz sam.", correct: false, reason: "Zlekceważyłeś radę i przegrałeś." },
+          { text: "Rozważasz teleportację jako alternatywę.", correct: true, next: decisionExtra9 }
+        ]
+      );
+    }
+    
+function decision8() {
+  showDecision(
+    "Pułapka iluzji",
+    "Białe Oko rzuca iluzję – sala zaczyna się zmieniać, a drużyna widzi własne odbicia.",
+    [
+      { text: "Atakujesz odbicia cieniem.", correct: false, reason: "To byli twoi towarzysze – zraniłeś ich i przegrałeś." },
+      { text: "Michalix analizuje iluzję i wskazuje prawdziwego wroga.", correct: true, next: decision9 }
+    ]
+  );
+}
+
+function decision9() {
+  showDecision(
+    "Kontratak",
+    "Dzięki radzie Michalixa udaje wam się przebić przez iluzję. Białe Oko osłabło, ale przywołuje ogromnego demona.",
+    [
+      { text: "Maglimboo rzuca płomienną kulę.", correct: true, next: decision10 },
+      { text: "Sroka próbuje teleportować demona w przepaść.", correct: false, reason: "Demon opiera się teleportacji i zabija Srokę." }
+    ]
+  );
+}
+
+function decision10() {
+  showDecision(
+    "Ostateczna walka",
+    "Demon zostaje ranny. Macie ostatnią szansę na ostateczny cios.",
+    [
+      { text: "Wszyscy łączą swoje moce w jeden atak.", correct: true, next: victory },
+      { text: "Nateo atakuje sam cieniem.", correct: false, reason: "Twoja moc była za słaba przeciwko demonowi." }
+    ]
+  );
+}
+
+    function decisionExtra9() {
+      showDecision(
+        "Alternatywna teleportacja",
+        "Sroka może spróbować przenieść całą drużynę za plecy Białego Oka. Co robisz?",
+        [
+          { text: "Zgadzasz się.", correct: true, next: decisionExtra10 },
+          { text: "Odrzucasz ten plan.", correct: true, next: victory }
+        ]
+      );
+    }
+
+    function decisionExtra10() {
+      showDecision(
+        "Za plecami wroga",
+        "Teleportujecie się za plecy Białego Oka i macie okazję do ostatecznego ciosu.",
+        [
+          { text: "Atakujesz cieniem z zaskoczenia.", correct: true, next: victory },
+          { text: "Krzyczysz i zdradzasz pozycję.", correct: false, reason: "Białe Oko was zniszczył." }
+        ]
+      );
+    }
+    
+function decisionExtra11() {
+  showDecision(
+    "Ukrycie w cieniu",
+    "Nateo ukrywa was w cieniu, ale szkielety węszą waszą obecność.",
+    [
+      { text: "Zachowaj ciszę i czekaj.", correct: true, next: decision2 },
+      { text: "Rusz do ataku z zaskoczenia.", correct: false, reason: "Szkielety były gotowe i cię rozgromiły." }
+    ]
+  );
+}
+
+function decisionExtra12() {
+  showDecision(
+    "Teleportacja zwiadowcza",
+    "Sroka teleportuje się do korytarza, aby go sprawdzić. Wraca przerażona – tam czai się coś ogromnego.",
+    [
+      { text: "Unikasz tego korytarza i idziesz w ciemność.", correct: true, next: decision4 },
+      { text: "Idziesz tam mimo ostrzeżenia.", correct: false, reason: "Bestia cię rozszarpała." }
+    ]
+  );
+}
+
+function decisionExtra13() {
+  showDecision(
+    "Zaklęcie ochronne Michalixa",
+    "Michalix próbuje stworzyć tarczę ochronną, by powstrzymać upadek.",
+    [
+      { text: "Pomagasz mu cieniem, by wzmocnić tarczę.", correct: true, next: decision5 },
+      { text: "Czekasz biernie.", correct: false, reason: "Zaklęcie było zbyt słabe i wszyscy spadliście." }
+    ]
+  );
+}
+
+function decisionExtra14() {
+  showDecision(
+    "Rozmowa z Białym Okiem",
+    "Próbujesz zagadać Białe Oko, aby zyskać czas. Wróg patrzy na ciebie lodowatym spojrzeniem.",
+    [
+      { text: "Michalix wspiera cię dyplomacją.", correct: true, next: decision6 },
+      { text: "Krzyczysz, że go pokonasz.", correct: false, reason: "Białe Oko wściekło się i unicestwiło cię natychmiast." }
+    ]
+  );
+}
+
+function decisionExtra15() {
+  showDecision(
+    "Cień i teleportacja",
+    "Łączysz moc cienia z teleportacją Sroki, by przeniknąć obronę Białego Oka.",
+    [
+      { text: "Atakujecie razem z zaskoczenia.", correct: true, next: victory },
+      { text: "Robisz to sam, bez Sroki.", correct: false, reason: "Siła Białego Oka była zbyt wielka." }
+    ]
+  );
+}
+
+function decision8() {
+  showDecision(
+    "Pułapka iluzji",
+    "Białe Oko rzuca iluzję – sala zaczyna się zmieniać, a drużyna widzi własne odbicia.",
+    [
+      { text: "Atakujesz odbicia cieniem.", correct: false, reason: "To byli twoi towarzysze – zraniłeś ich i przegrałeś." },
+      { text: "Michalix analizuje iluzję i wskazuje prawdziwego wroga.", correct: true, next: decision9 },
+      { text: "Gulczyk próbuje zalać salę wodą, by zmyć iluzję.", correct: true, next: decisionExtra16 },
+      { text: "Sroka teleportuje drużynę w bezpieczne miejsce.", correct: true, next: decisionExtra17 }
+    ]
+  );
+}
+
+function decision9() {
+  showDecision(
+    "Kontratak",
+    "Dzięki radzie Michalixa udaje wam się przebić przez iluzję. Białe Oko osłabło, ale przywołuje ogromnego demona.",
+    [
+      { text: "Maglimboo rzuca płomienną kulę.", correct: true, next: decision10 },
+      { text: "Sroka próbuje teleportować demona w przepaść.", correct: false, reason: "Demon opiera się teleportacji i zabija Srokę." },
+      { text: "Nateo używa swojej mocy cienia, aby zmylić demona.", correct: true, next: decisionExtra18 },
+      { text: "Mrówa strzela snajperką w demona z góry.", correct: true, next: decisionExtra19 }
+    ]
+  );
+}
+
+function decision10() {
+  showDecision(
+    "Ostateczna walka",
+    "Demon zostaje ranny. Macie ostatnią szansę na ostateczny cios.",
+    [
+      { text: "Wszyscy łączą swoje moce w jeden atak.", correct: true, next: victory },
+      { text: "Nateo atakuje sam cieniem.", correct: false, reason: "Twoja moc była za słaba przeciwko demonowi." },
+      { text: "Gulczyk i Maglimboo współpracują, tworząc parę ognisto-wodną.", correct: true, next: victory },
+      { text: "Mrówa czeka na idealny moment, by strzelać.", correct: true, next: victory },
+      { text: "Sroka teleportuje całą drużynę za demona, próbując zaskoczyć go.", correct: true, next: victory }
+    ]
+  );
+}
+
+// Nowe dodatkowe funkcje dla nowych opcji
+function decisionExtra16() {
+  showDecision(
+    "Woda zmywa iluzję",
+    "Gulczyk zalewa salę wodą, iluzja zostaje rozproszona. Możecie teraz zaatakować prawdziwego wroga.",
+    [
+      { text: "Atakujcie wspólnie.", correct: true, next: decision9 },
+      { text: "Podzielcie się, by zaatakować z różnych stron.", correct: true, next: decision9 }
+    ]
+  );
+}
+
+function decisionExtra17() {
+  showDecision(
+    "Teleportacja Sroki",
+    "Sroka teleportuje drużynę w bezpieczne miejsce, ale część wrogów pozostała w tyle.",
+    [
+      { text: "Wracacie, by walczyć z resztą wrogów.", correct: true, next: decision9 },
+      { text: "Kontynuujcie bez powrotu.", correct: true, next: decision9 }
+    ]
+  );
+}
+
+function decisionExtra18() {
+  showDecision(
+    "Cień myli demona",
+    "Nateo używa cienia, by zmylić demona. Demon atakuje własne iluzje.",
+    [
+      { text: "Cała drużyna atakuje teraz wroga.", correct: true, next: decision10 },
+      { text: "Czekasz na kolejny ruch demona.", correct: true, next: decision10 }
+    ]
+  );
+}
+
+function decisionExtra19() {
+  showDecision(
+    "Strzał z góry",
+    "Mrówa strzela snajperką w demona z góry, trafiając w słaby punkt.",
+    [
+      { text: "Połączcie siły i dokończcie atak.", correct: true, next: decision10 },
+      { text: "Atakujesz sam, korzystając z odwrócenia uwagi.", correct: false, reason: "Demon odpiera atak i zabija cię." }
+    ]
+  );
+}
+
+    function victory() {
+      showDecision(
+        "Zwycięstwo!",
+        "Dzięki współpracy ekipy pokonaliście Białe Oko i jego szkielety. To dopiero początek waszej przygody...",
+        [
+          { text: "Powrót do menu", correct: true, next: () => location.reload() }
+        ]
+      );
+    }
+
+    function showDecision(title, text, options) {
+      decision.style.display = "block";
+      deathScreen.style.display = "none";
+      decisionTitle.textContent = title;
+      decisionText.textContent = text;
+      decisionButtons.innerHTML = "";
+      lastDecision = () => showDecision(title, text, options);
+
+      options.forEach(option => {
+        const btn = document.createElement("button");
+        btn.textContent = option.text;
+        btn.onclick = () => {
+          if (option.correct) {
+            if (option.next) option.next();
+          } else {
+            showDeath(option.reason || "Zginąłeś w nieznanych okolicznościach.");
+          }
+        };
+        decisionButtons.appendChild(btn);
+      });
+    }
+
+    function showDeath(reason) {
+      decision.style.display = "none";
+      deathScreen.style.display = "block";
+      deathReason.textContent = `Powód: ${reason}`;
+      setTimeout(() => {
+        deathScreen.style.display = "none";
+        if (lastDecision) lastDecision();
+      }, 5000);
+    }
+
+    menu.style.display = "block";
+  </script>
+</body>
+</html>
