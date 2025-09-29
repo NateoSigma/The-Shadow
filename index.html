@@ -548,233 +548,340 @@ function decision12() {
 
 function decision13() {
   showDecision(
-    "Ukryty demon"() {
-      showDecision(
-        "Teleportacja Sroki",
-        "Sroka pojawia się za plecami Białego Oka i ma okazję do ataku. Co robisz?",
-        [
-          { text: "Każesz mu zaatakować.", correct: false, reason: "Białe Oko przewidział ruch i go unicestwił." },
-          { text: "Wspierasz go cieniem, odciągając uwagę.", correct: true, next: victory }
-        ]
-      );
-    }
-
-    function decision7() {
-      showDecision(
-        "Rada Michalixa",
-        "Michalix radzi użyć połączenia mocy wody i ognia, aby stworzyć parę i osłonić was przed atakami.",
-        [
-          { text: "Stosujesz jego plan.", correct: true, next: victory },
-          { text: "Ignorujesz i ruszasz sam.", correct: false, reason: "Zlekceważyłeś radę i przegrałeś." },
-          { text: "Rozważasz teleportację jako alternatywę.", correct: true, next: decisionExtra9 }
-        ]
-      );
-    }
-    
-function decision8() {
-  showDecision(
-    "Pułapka iluzji",
-    "Białe Oko rzuca iluzję – sala zaczyna się zmieniać, a drużyna widzi własne odbicia.",
+    "Ukryty demon",
+    "W rogu komnaty dostrzegacie skrytego demona gotowego do ataku.",
     [
-      { text: "Atakujesz odbicia cieniem.", correct: false, reason: "To byli twoi towarzysze – zraniłeś ich i przegrałeś." },
-      { text: "Michalix analizuje iluzję i wskazuje prawdziwego wroga.", correct: true, next: decision9 }
+      { text: "Atakujcie razem", correct: true, next: decisionExtra23 },
+      { text: "Użyj cienia do zmylenia demona", correct: true, next: decisionExtra24 },
+      { text: "Ucieknijcie", correct: false, reason: "Demon was złapał i zniszczył." }
     ]
   );
 }
 
-function decision9() {
+function decision14() {
   showDecision(
-    "Kontratak",
-    "Dzięki radzie Michalixa udaje wam się przebić przez iluzję. Białe Oko osłabło, ale przywołuje ogromnego demona.",
+    "Zdradliwa mgła",
+    "Sala wypełnia się gęstą, magiczną mgłą. Drużyna traci orientację.",
     [
-      { text: "Maglimboo rzuca płomienną kulę.", correct: true, next: decision10 },
-      { text: "Sroka próbuje teleportować demona w przepaść.", correct: false, reason: "Demon opiera się teleportacji i zabija Srokę." }
+      { text: "Mrówa prowadzi strzały, by oświetlić drogę", correct: true, next: decisionExtra25 },
+      { text: "Idź na czuja", correct: false, reason: "Zgubicie się i giniecie w mgłę." },
+      { text: "Gulczyk tworzy wodną ścianę, by oczyścić mgłę", correct: true, next: decisionExtra26 }
     ]
   );
 }
 
-function decision10() {
+function decision15() {
   showDecision(
-    "Ostateczna walka",
-    "Demon zostaje ranny. Macie ostatnią szansę na ostateczny cios.",
+    "Starożytne runy",
+    "Na podłodze znajdują się magiczne runy. Mogą dać moc lub zabić.",
     [
-      { text: "Wszyscy łączą swoje moce w jeden atak.", correct: true, next: victory },
-      { text: "Nateo atakuje sam cieniem.", correct: false, reason: "Twoja moc była za słaba przeciwko demonowi." }
+      { text: "Aktywuj runy razem z drużyną", correct: true, next: decisionExtra27 },
+      { text: "Ignoruj runy i idź dalej", correct: true, next: decisionExtra28 },
+      { text: "Nateo aktywuje je sam", correct: false, reason: "Runy zabiły cię natychmiast." }
     ]
   );
 }
 
-    function decisionExtra9() {
-      showDecision(
-        "Alternatywna teleportacja",
-        "Sroka może spróbować przenieść całą drużynę za plecy Białego Oka. Co robisz?",
-        [
-          { text: "Zgadzasz się.", correct: true, next: decisionExtra10 },
-          { text: "Odrzucasz ten plan.", correct: true, next: victory }
-        ]
-      );
-    }
-
-    function decisionExtra10() {
-      showDecision(
-        "Za plecami wroga",
-        "Teleportujecie się za plecy Białego Oka i macie okazję do ostatecznego ciosu.",
-        [
-          { text: "Atakujesz cieniem z zaskoczenia.", correct: true, next: victory },
-          { text: "Krzyczysz i zdradzasz pozycję.", correct: false, reason: "Białe Oko was zniszczył." }
-        ]
-      );
-    }
-    
-function decisionExtra11() {
+function decisionExtra20() {
   showDecision(
-    "Ukrycie w cieniu",
-    "Nateo ukrywa was w cieniu, ale szkielety węszą waszą obecność.",
+    "Artefakty ożywają",
+    "Niektóre artefakty zaczynają pulsować i ożywają jako mini-demoni.",
     [
-      { text: "Zachowaj ciszę i czekaj.", correct: true, next: decision2 },
-      { text: "Rusz do ataku z zaskoczenia.", correct: false, reason: "Szkielety były gotowe i cię rozgromiły." }
+      { text: "Zniszcz artefakty ogniem Maglimboo", correct: true, next: decision12 },
+      { text: "Uciekajcie", correct: true, next: decision12 },
+      { text: "Próbuj użyć cienia Nateo", correct: false, reason: "Demoni zniszczyli cię." }
     ]
   );
 }
 
-function decisionExtra12() {
+function decisionExtra21() {
   showDecision(
-    "Teleportacja zwiadowcza",
-    "Sroka teleportuje się do korytarza, aby go sprawdzić. Wraca przerażona – tam czai się coś ogromnego.",
+    "Przechodzenie mostu",
+    "Most skrzypi, ale trzymacie równowagę.",
     [
-      { text: "Unikasz tego korytarza i idziesz w ciemność.", correct: true, next: decision4 },
-      { text: "Idziesz tam mimo ostrzeżenia.", correct: false, reason: "Bestia cię rozszarpała." }
+      { text: "Idź spokojnie", correct: true, next: decision13 },
+      { text: "Przyspiesz kroku", correct: false, reason: "Most się zawalił i spadliście." }
     ]
   );
 }
 
-function decisionExtra13() {
+function decisionExtra22() {
   showDecision(
-    "Zaklęcie ochronne Michalixa",
-    "Michalix próbuje stworzyć tarczę ochronną, by powstrzymać upadek.",
+    "Teleportacja nad przepaścią",
+    "Sroka teleportuje drużynę w bezpieczne miejsce.",
     [
-      { text: "Pomagasz mu cieniem, by wzmocnić tarczę.", correct: true, next: decision5 },
-      { text: "Czekasz biernie.", correct: false, reason: "Zaklęcie było zbyt słabe i wszyscy spadliście." }
+      { text: "Kontynuujcie przygodę", correct: true, next: decision13 }
     ]
   );
 }
 
-function decisionExtra14() {
+function decisionExtra23() {
   showDecision(
-    "Rozmowa z Białym Okiem",
-    "Próbujesz zagadać Białe Oko, aby zyskać czas. Wróg patrzy na ciebie lodowatym spojrzeniem.",
+    "Walka z demonem",
+    "Drużyna atakuje wspólnie i rani demona.",
     [
-      { text: "Michalix wspiera cię dyplomacją.", correct: true, next: decision6 },
-      { text: "Krzyczysz, że go pokonasz.", correct: false, reason: "Białe Oko wściekło się i unicestwiło cię natychmiast." }
+      { text: "Użyj cienia Nateo do odwrócenia uwagi", correct: true, next: decision14 },
+      { text: "Próbuj samodzielnie zabić demona", correct: false, reason: "Demon cię unicestwił." }
     ]
   );
 }
 
-function decisionExtra15() {
-  showDecision(
-    "Cień i teleportacja",
-    "Łączysz moc cienia z teleportacją Sroki, by przeniknąć obronę Białego Oka.",
-    [
-      { text: "Atakujecie razem z zaskoczenia.", correct: true, next: victory },
-      { text: "Robisz to sam, bez Sroki.", correct: false, reason: "Siła Białego Oka była zbyt wielka." }
-    ]
-  );
-}
-
-function decision8() {
-  showDecision(
-    "Pułapka iluzji",
-    "Białe Oko rzuca iluzję – sala zaczyna się zmieniać, a drużyna widzi własne odbicia.",
-    [
-      { text: "Atakujesz odbicia cieniem.", correct: false, reason: "To byli twoi towarzysze – zraniłeś ich i przegrałeś." },
-      { text: "Michalix analizuje iluzję i wskazuje prawdziwego wroga.", correct: true, next: decision9 },
-      { text: "Gulczyk próbuje zalać salę wodą, by zmyć iluzję.", correct: true, next: decisionExtra16 },
-      { text: "Sroka teleportuje drużynę w bezpieczne miejsce.", correct: true, next: decisionExtra17 }
-    ]
-  );
-}
-
-function decision9() {
-  showDecision(
-    "Kontratak",
-    "Dzięki radzie Michalixa udaje wam się przebić przez iluzję. Białe Oko osłabło, ale przywołuje ogromnego demona.",
-    [
-      { text: "Maglimboo rzuca płomienną kulę.", correct: true, next: decision10 },
-      { text: "Sroka próbuje teleportować demona w przepaść.", correct: false, reason: "Demon opiera się teleportacji i zabija Srokę." },
-      { text: "Nateo używa swojej mocy cienia, aby zmylić demona.", correct: true, next: decisionExtra18 },
-      { text: "Mrówa strzela snajperką w demona z góry.", correct: true, next: decisionExtra19 }
-    ]
-  );
-}
-
-function decision10() {
-  showDecision(
-    "Ostateczna walka",
-    "Demon zostaje ranny. Macie ostatnią szansę na ostateczny cios.",
-    [
-      { text: "Wszyscy łączą swoje moce w jeden atak.", correct: true, next: victory },
-      { text: "Nateo atakuje sam cieniem.", correct: false, reason: "Twoja moc była za słaba przeciwko demonowi." },
-      { text: "Gulczyk i Maglimboo współpracują, tworząc parę ognisto-wodną.", correct: true, next: victory },
-      { text: "Mrówa czeka na idealny moment, by strzelać.", correct: true, next: victory },
-      { text: "Sroka teleportuje całą drużynę za demona, próbując zaskoczyć go.", correct: true, next: victory }
-    ]
-  );
-}
-
-// Nowe dodatkowe funkcje dla nowych opcji
-function decisionExtra16() {
-  showDecision(
-    "Woda zmywa iluzję",
-    "Gulczyk zalewa salę wodą, iluzja zostaje rozproszona. Możecie teraz zaatakować prawdziwego wroga.",
-    [
-      { text: "Atakujcie wspólnie.", correct: true, next: decision9 },
-      { text: "Podzielcie się, by zaatakować z różnych stron.", correct: true, next: decision9 }
-    ]
-  );
-}
-
-function decisionExtra17() {
-  showDecision(
-    "Teleportacja Sroki",
-    "Sroka teleportuje drużynę w bezpieczne miejsce, ale część wrogów pozostała w tyle.",
-    [
-      { text: "Wracacie, by walczyć z resztą wrogów.", correct: true, next: decision9 },
-      { text: "Kontynuujcie bez powrotu.", correct: true, next: decision9 }
-    ]
-  );
-}
-
-function decisionExtra18() {
+function decisionExtra24() {
   showDecision(
     "Cień myli demona",
-    "Nateo używa cienia, by zmylić demona. Demon atakuje własne iluzje.",
+    "Nateo tworzy iluzje cieni, demon atakuje błędne postacie.",
     [
-      { text: "Cała drużyna atakuje teraz wroga.", correct: true, next: decision10 },
-      { text: "Czekasz na kolejny ruch demona.", correct: true, next: decision10 }
+      { text: "Cała drużyna atakuje teraz prawdziwego demona", correct: true, next: decision14 },
+      { text: "Czekasz na kolejny ruch demona", correct: true, next: decision14 }
     ]
   );
 }
 
-function decisionExtra19() {
+function decisionExtra25() {
   showDecision(
-    "Strzał z góry",
-    "Mrówa strzela snajperką w demona z góry, trafiając w słaby punkt.",
+    "Strzały w mgłę",
+    "Mrówa prowadzi strzały i drużyna przechodzi przez mgłę bezpiecznie.",
     [
-      { text: "Połączcie siły i dokończcie atak.", correct: true, next: decision10 },
-      { text: "Atakujesz sam, korzystając z odwrócenia uwagi.", correct: false, reason: "Demon odpiera atak i zabija cię." }
+      { text: "Kontynuuj dalej", correct: true, next: decision15 }
     ]
   );
 }
 
-    function victory() {
-      showDecision(
-        "Zwycięstwo!",
-        "Dzięki współpracy ekipy pokonaliście Białe Oko i jego szkielety. To dopiero początek waszej przygody...",
-        [
-          { text: "Powrót do menu", correct: true, next: () => location.reload() }
-        ]
-      );
-    }
+function decisionExtra26() {
+  showDecision(
+    "Wodna ściana",
+    "Woda rozprasza mgłę i demon w niej zostaje odsłonięty.",
+    [
+      { text: "Atakuj demon razem z drużyną", correct: true, next: decision15 }
+    ]
+  );
+}
+
+function decisionExtra27() {
+  showDecision(
+    "Runy dają moc",
+    "Runy wzmacniają moce Nateo i Maglimboo.",
+    [
+      { text: "Wykorzystaj moc do pokonania kolejnego wroga", correct: true, next: victory },
+      { text: "Ignoruj nowe moce", correct: true, next: victory }
+    ]
+  );
+}
+
+function decisionExtra28() {
+  showDecision(
+    "Runy pozostają nieaktywne",
+    "Drużyna przechodzi obok run bez skutków.",
+    [
+      { text: "Kontynuujcie przygodę", correct: true, next: victory }
+    ]
+  );
+}
+
+function decisionExtra29() {
+  showDecision(
+    "Ukryta pułapka",
+    "Drużyna odkrywa pułapkę, zanim ją aktywuje.",
+    [
+      { text: "Rozbroić pułapkę wspólnie", correct: true, next: decision15 },
+      { text: "Ignorować pułapkę", correct: false, reason: "Pułapka aktywuje się i giniesz." }
+    ]
+  );
+}
+
+function decisionExtra30() {
+  showDecision(
+    "Ostatnia próba",
+    "Na końcu sali stoi starożytny strażnik gotowy do ataku.",
+    [
+      { text: "Wszyscy atakują razem", correct: true, next: victory },
+      { text: "Atakujesz sam", correct: false, reason: "Strażnik zniszczył cię jednym ciosem." }
+    ]
+  );
+}
+
+function victory() {
+  showDecision(
+    "Zwycięstwo!",
+    "Dzięki współpracy ekipy pokonaliście Białe Oko i jego szkielety. To dopiero początek waszej przygody...",
+    [
+      { text: "Powrót do menu", correct: true, next: () => {
+          menu.style.display = "block";
+          chapter.style.display = "none";
+          decision.style.display = "none";
+          deathScreen.style.display = "none";
+          // Odsłoń chapter 2 po ukończeniu chapter 1
+          document.getElementById("chapter2-btn").style.display = "block";
+        } 
+      }
+    ]
+  );
+}
+
+function startChapter2() {
+  menu.style.display = "none";
+  decision.style.display = "none";
+  deathScreen.style.display = "none";
+  chapter2();
+}
+
+function chapter2() {
+  showDecision(
+    "Rozdział 2: Króliczy wróg",
+    "Po zwycięstwie nad Białym Okiem twoja drużyna wyrusza dalej. Na horyzoncie pojawia się nowy przeciwnik – ogromny królik o oczach pełnych nienawiści. To nie jest zwykłe stworzenie, lecz pradawny strażnik ruin.",
+    [
+      { text: "Spróbuj oswoić królika cieniem.", correct: false, reason: "Królika nie da się oswoić – rzucił się na ciebie i rozszarpał." },
+      { text: "Mrówa próbuje odstraszyć go strzałem ostrzegawczym.", correct: true, next: decisionC2_1 },
+      { text: "Maglimboo podpala trawę, aby odgrodzić drogę królikowi.", correct: true, next: decisionC2_2 },
+      { text: "Sroka próbuje teleportować drużynę dalej.", correct: false, reason: "Teleportacja zawiodła – królik wyczuł was w cieniu i zaatakował." }
+    ]
+  );
+}
+
+function decisionC2_1() {
+  showDecision(
+    "Strzał ostrzegawczy",
+    "Strzał Mrówy spłoszył królika, ale ten tylko się rozjuszył i przyzywa stado mniejszych królików.",
+    [
+      { text: "Atakujesz cieniem, by rozproszyć stado.", correct: true, next: decisionC2_3 },
+      { text: "Czekasz, aż drużyna zareaguje.", correct: false, reason: "Króliki was otoczyły i stratowały." }
+    ]
+  );
+}
+
+function decisionC2_2() {
+  showDecision(
+    "Ściana ognia",
+    "Maglimboo tworzy płonącą barierę. Królik przeskakuje przez nią i ląduje przed wami.",
+    [
+      { text: "Gulczyk zalewa go falą wody.", correct: true, next: decisionC2_3 },
+      { text: "Próbujesz porozmawiać z nim.", correct: false, reason: "Królik nie zna litości – rozszarpał cię na miejscu." }
+    ]
+  );
+}
+
+function decisionC2_3() {
+  showDecision(
+    "Pojedynek finałowy",
+    "Królik zostaje osłabiony, ale wciąż walczy. To ostatnia szansa!",
+    [
+      { text: "Wszyscy łączą swoje moce, by go pokonać.", correct: true, next: decisionC2_4 },
+      { text: "Nateo rzuca się sam do ataku.", correct: false, reason: "Sam nie miałeś szans – królik cię zmiażdżył." }
+    ]
+  );
+}
+
+function decisionC2_4() {
+  showDecision(
+    "Mroczny cień",
+    "Używasz cienia, aby spowić królika w mroku. Jednak stwór zaczyna węszyć i wyczuwa twoją obecność.",
+    [
+      { text: "Ukryjcie się całkowicie w cieniu.", correct: true, next: decisionC2_5 },
+      { text: "Ruszcie do ataku z zaskoczenia.", correct: false, reason: "Królika nie dało się zaskoczyć – stratował was natychmiast." }
+    ]
+  );
+}
+
+function decisionC2_5() {
+  showDecision(
+    "Ukrycie w cieniu",
+    "Króliki biegają wokół, ale nie mogą was znaleźć.",
+    [
+      { text: "Poczekaj, aż odejdą i wtedy rusz dalej.", correct: true, next: decisionC2_6 },
+      { text: "Wyślij Srokę, by sprawdził drogę teleportacją.", correct: true, next: decisionC2_7 }
+    ]
+  );
+}
+
+function decisionC2_6() {
+  showDecision(
+    "Bezpieczna ścieżka",
+    "Czekanie się opłaciło – część królików zniknęła w ciemnościach.",
+    [
+      { text: "Idź dalej z drużyną.", correct: true, next: decisionC2_8 },
+      { text: "Zostaw drużynę i idź sam.", correct: false, reason: "Samotny krok w ruinach skończył się pułapką i śmiercią." }
+    ]
+  );
+}
+
+function decisionC2_7() {
+  showDecision(
+    "Zwiad Sroki",
+    "Sroka wraca blady – przed wami czyha olbrzymi królik-cyborg, strażnik bramy.",
+    [
+      { text: "Spróbujcie go obejść.", correct: true, next: decisionC2_8 },
+      { text: "Atak frontalny!", correct: false, reason: "Cyborg-królik miażdży drużynę jednym ciosem." }
+    ]
+  );
+}
+
+function decisionC2_8() {
+  showDecision(
+    "Sala Królików",
+    "Wchodzicie do wielkiej sali pełnej kamiennych posągów królików. Nagle kilka ożywa!",
+    [
+      { text: "Maglimboo podpala posągi.", correct: true, next: decisionC2_9 },
+      { text: "Gulczyk zalewa salę wodą.", correct: true, next: decisionC2_10 },
+      { text: "Spróbuj użyć cienia, aby je unieruchomić.", correct: false, reason: "Cień odbił się od posągów i zaatakował ciebie." }
+    ]
+  );
+}
+
+function decisionC2_9() {
+  showDecision(
+    "Ogień kontra kamień",
+    "Ogień spowalnia posągi, ale nie niszczy ich całkowicie.",
+    [
+      { text: "Połącz ogień z wodą Gulczyka, tworząc parę.", correct: true, next: decisionC2_11 },
+      { text: "Atakuj dalej samym ogniem.", correct: false, reason: "Kamienne króliki przetrwały i zmiażdżyły was." }
+    ]
+  );
+}
+
+function decisionC2_10() {
+  showDecision(
+    "Zalanie sali",
+    "Woda spowalnia kamienne króliki, ale podnosi poziom zalania w sali.",
+    [
+      { text: "Użyj teleportacji, aby wydostać się wyżej.", correct: true, next: decisionC2_11 },
+      { text: "Próbuj płynąć dalej.", correct: false, reason: "Utonęliście w zalanej sali pełnej królików." }
+    ]
+  );
+}
+
+function decisionC2_11() {
+  showDecision(
+    "Brama finałowa",
+    "Docieracie do ogromnej bramy z wyrzeźbionym symbolem królika. Drzwi powoli się otwierają.",
+    [
+      { text: "Wejdźcie razem do środka.", correct: true, next: decisionC2_12 },
+      { text: "Spróbuj wejść sam pierwszy.", correct: false, reason: "Pułapka zabiła samotnego śmiałka." }
+    ]
+  );
+}
+
+function decisionC2_12() {
+  showDecision(
+    "Ostateczne starcie",
+    "Za bramą czeka na was Królik-Władca, gigantyczny stwór z czerwonymi oczami.",
+    [
+      { text: "Wszyscy łączą swoje moce w atak.", correct: true, next: victory2 },
+      { text: "Nateo próbuje walczyć cieniem sam.", correct: false, reason: "Królik-Władca był zbyt silny." },
+      { text: "Mrówa celuje snajperką w czerwone oczy.", correct: true, next: victory2 },
+      { text: "Spróbujecie rozproszyć go iluzją cienia.", correct: true, next: victory2 }
+    ]
+  );
+}
+
+function victory2() {
+  showDecision(
+    "Zwycięstwo nad Króliczym Wrogiem!",
+    "Pokonaliście pradawnego królika. Ruiny kryją jednak jeszcze więcej tajemnic...",
+    [
+      { text: "Powrót do menu", correct: true, next: () => location.reload() }
+    ]
+  );
+}
 
     function showDecision(title, text, options) {
       decision.style.display = "block";
